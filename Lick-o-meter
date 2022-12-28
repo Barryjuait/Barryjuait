@@ -1,5 +1,26 @@
 #include <CapacitiveSensor.h>
 
+/*
+
+:Author: Sebastian Barrientos
+:Email: bio.barryjuaisen@gmail.com
+:Date: 05/07/2017
+:Revision: version#
+:License: Public Domain
+
+Installation
+This method allows you to detect touch from two different sources. I used it in a project in which I needed to detect how many times 
+a mouse licked either one or another water spout. 
+
+1. connect LEDs for reporting (pins 8 and 13).
+2. connect 1 cables to each water spout as indicated here: 
+https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/57170/versions/2/previews/html/CapacitiveSensorExample_01.png
+3. connect input and output of each spputs to the selected arduino pins.
+4. modify the threshold to your needs.
+5. compile and run.
+
+*/
+
 int LED1 = 8; //RIGHT
 int LED2 = 13; //LEFT
 CapacitiveSensor   cs_1 = CapacitiveSensor(11,12); // capacitivesensor(output, input)
