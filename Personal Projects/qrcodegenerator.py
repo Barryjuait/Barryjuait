@@ -14,7 +14,7 @@ def generate_qr_code(url, filename):
     img.save(filename)
 
 # Example usage
-url = "https://github.com/Barryjuait/Portfolio"  # Replace with your website URL
-filename = "qrcode.png"  # Replace with desired filename
+url = "https://www.ivrs.se"  # Replace with your website URL
+filename = "/Users/sbk/Documents/IVRS/Website/" + "websiteQR.png"  # Replace with desired filename
 generate_qr_code(url, filename)
 print(f"QR code saved as '{filename}'")
