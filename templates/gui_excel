@@ -1,0 +1,92 @@
+import tkinter as tk
+from tkinter import filedialog, simpledialog
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+# Global variables to store selected columns
+selected_x_column = None
+selected_y_column = None
+
+# Function to open an Excel file and plot data
+def open_excel_and_plot():
+    file_path = filedialog.askopenfilename(filetypes=[("Excel Files", "*.xlsx *.xls")])
+    
+    if file_path:
+        df = pd.read_excel(file_path)
+        
+        # Get the list of available columns
+        columns = df.columns.tolist()
+        
+        # Create a new window for column selection
+        column_selection_window = tk.Toplevel(window)
+        column_selection_window.title("Column Selection")
+        
+        # Create a Listbox to display the column names
+        column_listbox = tk.Listbox(column_selection_window, selectmode=tk.MULTIPLE)
+        column_listbox.pack()
+        
+        # Populate the Listbox with column names
+        for column in columns:
+            column_listbox.insert(tk.END, column)
+        
+        # Function to handle the OK button and selected columns
+        def ok_button_click():
+            global selected_x_column, selected_y_column
+            selected_columns = column_listbox.curselection()
+            if len(selected_columns) == 2:
+                selected_x_column = columns[selected_columns[0]]
+                selected_y_column = columns[selected_columns[1]]
+                column_selection_window.destroy()
+                plot_selected_columns()
+            else:
+                tk.messagebox.showerror("Error", "Please select exactly 2 columns.")
+        
+        # Create an OK button to confirm the selection
+        ok_button = tk.Button(column_selection_window, text="OK", command=ok_button_click)
+        ok_button.pack()
+
+# Function to plot the selected columns
+def plot_selected_columns():
+    file_path = filedialog.askopenfilename(filetypes=[("Excel Files", "*.xlsx *.xls")])
+    
+    if file_path:
+        df = pd.read_excel(file_path)
+        
+        # Create a simple scatter plot using the selected columns
+        plt.scatter(df[selected_x_column], df[selected_y_column])
+        plt.xlabel(selected_x_column)
+        plt.ylabel(selected_y_column)
+        plt.title(f'{selected_x_column} vs {selected_y_column}')
+        
+        # Create a Tkinter canvas to display the plot
+        canvas = FigureCanvasTkAgg(plt.gcf(), master=window)
+        canvas.get_tk_widget().pack()
+
+def choose_color():
+    color = askcolor()[1]  # Opens a color chooser dialog
+    color_var.set(color)
+
+# Create the main window
+window = tk.Tk()
+window.title("Excel Data Plotter")
+window.geometry("200x500")  # Set the window size to 800x600 pixels
+
+# User-defined plot color
+color_var = tk.StringVar()
+color_var.set("b")  # Default plot color
+
+# Button to open Excel file and plot data
+open_button = tk.Button(window, text="Open Excel File", command=open_excel_and_plot, state = 'active')
+open_button.pack()
+
+# Button to choose plot color
+color_button = tk.Button(window, text="Choose Plot Color", command=choose_color, state = 'active')
+color_button.pack()
+
+# Run the Tkinter main loop
+window.mainloop()
+
+
+
+
