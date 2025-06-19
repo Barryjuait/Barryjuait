@@ -5,12 +5,12 @@ from datetime import datetime
 
 
 # Explicitly specify the path to the .env file
-homeFolder = "/Users/sbk/Documents/Datasets/LLM"
+homeFolder = "Barryjuait/Barryjuait/Personal Projects/LLM"
 envFile = os.path.join(homeFolder, '.env')
 
 if os.path.exists(envFile):
     print(f"Loading environment variables from {envFile}")
-    load_dotenv(dotenv_path="/Users/sbk/Documents/Datasets/LLM/.env")
+    load_dotenv(dotenv_path= os.path.join(homeFolder, '.env'))
 else:
     raise FileNotFoundError(f".env file not found at {envFile}")
 
